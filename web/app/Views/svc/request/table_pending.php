@@ -8,6 +8,7 @@
       <table class="table table-striped" id="pending_table">
         <tr>
           <th>No</th>
+          <th>Modul</th>
           <th>Request</th>
           <th>Reason</th>
           <th>Date</th>
@@ -20,6 +21,7 @@
        	  ?>
         <tr>
        	  	<td><?= $key + 1; ?></td>
+             <td><?= $value['modul']; ?></td>
             <td><?= $value['request']; ?></td>
             <td><?= $value['reason']; ?></td>
             <td><div class="badge"><?= $created_at ?></div></td>
