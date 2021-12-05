@@ -4,11 +4,33 @@
   <div class="card-header">
     <h4>Form Service Request</h4>
   </div>	
+
 	
   <div class="card-body">
 	  <div class="ticket-form">
-		<form method="POST" action="<?= base_url('SR/request'); ?>" class="needs-validation" novalidate="" enctype="multipart/form-data">
-		  <div class="row">
+		<form method="POST" action="<?= base_url('SR/request_sap'); ?>" class="needs-validation" novalidate="" enctype="multipart/form-data">
+		<div class='row'>
+			<div class="form-group col-12 col-md-6 col-lg-6">
+				<!-- <a class="btn btn-info btn-sm dropdown-toggle" href="#" id="dropdown01" type='button' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Functional Label </a>
+				<div class="dropdown-menu" aria-labelledby="dropdown01" >
+					<a class="dropdown-item" href="#">MM</a>
+					<a class="dropdown-item" href="#">PM</a>
+					<a class="dropdown-item" href="#">FICO</a>
+					<a class="dropdown-item" href="#">HR</a>
+				</div>
+	 -->
+				<select name='modul'>
+					
+					<option  selected>Pilih Modul</option>
+					<option  value="MM">MM</option>
+					<option  value="PM">PM</option>
+					<option  value="FICO">FICO</option>
+					<option  value="HR">HR</option>
+				</select>
+
+			</div>
+		</div>
+		<div class="row">
 			  <div class="form-group col-12 col-md-6 col-lg-6">
 			  	<label>Request</label>
 			    <textarea class="summernote form-control" name="request" placeholder="Type your request here" style="height: 210px;" required=""></textarea>

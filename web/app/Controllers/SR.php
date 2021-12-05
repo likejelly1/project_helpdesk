@@ -144,18 +144,64 @@ class SR extends BaseController
 	}
 
 
-	public function requestType()
-	{
-		$post = $this->request->getPost();
-		if ($post['menu'] == 'non_sap') {
-			return redirect()->to('SR/request');
+	// public function requestType()
+	// {
+	// 	$post = $this->request->getPost();
+	// 	if ($post['menu'] == 'non_sap') {
+	// 		return redirect()->to('SR/request');
+	// 	}
+	// 	else {
+	// 		# code...
+	// 		return redirect()->to('SR/request_sap');
+	// 	}
+	// 	# code...
+	// }
+
+	public function request_sap()
+    {
+        $post = $this->request->getPost();
+		if($post) {
+			if($imagefile = $this->request->getFiles())
+			{
+			   $attachment = array();
+			   foreach($imagefile['attachment'] as $img)
+			   {
+			   	  $mime_type = $img->getClientMimeType();
+			   	  $type = explode("/", $mime_type);	
+
+			      if ($img->isValid() && ! $img->hasMoved() && $type[0] == "image")
+			      {
+			           $newName = $img->getRandomName();
+			           $img->move("public/stisla/attachment/", $newName);
+			           $attachment[] = $newName;
+			      }
+			   }
+			}
+			
+			$post['nik'] = $this->session->get('nik');
+			$post['status'] = 0;
+			$post['attachment'] = json_encode($attachment);
+			$post['modul'] = $this->session->get('modul');
+			$request_sr = new Request_SR();
+			$request_sr->insert($post);
+
+			$site_pic = $this->session->get('site');
+			$msg = $this->session->get('name')." make new request!\n<i>Request</i> : ".$post['request'];
+
+			$ms_karyawan = new Ms_Karyawan();
+			$pic_chat_id = $ms_karyawan->getPICsite($site_pic);
+
+			if($pic_chat_id)
+				tg_message($msg, $pic_chat_id);
+			
+			wp_redirect("SR/pending_request");
+		} else {
+			echo view('header');
+			echo view('svc/request/request_sap');
+			echo view('footer');	
 		}
-		else {
-			# code...
-			return redirect()->to('SR/request_sap');
-		}
-		# code...
-	}
+		
+    }
 
 	public function request() {
 		$post = $this->request->getPost();
@@ -176,7 +222,7 @@ class SR extends BaseController
 			      }
 			   }
 			}
-
+			
 			$post['nik'] = $this->session->get('nik');
 			$post['status'] = 0;
 			$post['attachment'] = json_encode($attachment);
