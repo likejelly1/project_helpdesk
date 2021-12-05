@@ -29,10 +29,10 @@
             $('table').css("width", "100%");
       });
 
-      $('#ServiceModalButton').on('click',function () {
-        event.preventDefault();
-        $('#_ServiceModal').modal('show');
-      })
+      // $('#ServiceModalButton').on('click',function () {
+      //   event.preventDefault();
+      //   $('#_ServiceModal').modal('show');
+      // })
     
     });
   </script>
